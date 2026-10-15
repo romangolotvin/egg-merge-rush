@@ -1,3 +1,11 @@
+# Godot
+.godot/
+*.translation
+export_presets.cfg
+*.apk
+*.aab
+
+# Unity leftover (legacy)
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -5,35 +13,13 @@
 [Bb]uilds/
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
-[Mm]emoryCaptures/
-[Rr]ecordings/
-
-# local install/build noise
+.utmp/
+*.csproj
+*.sln
 hub-*.txt
-unity-install-*.txt
+unity-*.txt
 *.log
 
-*.csproj
-*.unityproj
-*.sln
-*.suo
-*.tmp
-*.user
-*.userprefs
-*.pidb
-*.booproj
-*.svd
-*.pdb
-*.mdb
-*.opendb
-*.VC.db
-
-.vs/
-.gradle/
-ExportedObj/
-.consulo/
-sysinfo.txt
-*.apk
-*.aab
-*.app
-crashlytics-build.properties
+# OS
+.DS_Store
+Thumbs.db
