@@ -19,7 +19,14 @@ namespace EggMerge.EditorTools
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "com.romangames.eggmergerush");
             PlayerSettings.productName = "Egg Merge Rush";
             PlayerSettings.bundleVersion = EggMerge.Core.UpdateConfig.AppVersion;
-            PlayerSettings.Android.bundleVersionCode = 1;
+            PlayerSettings.Android.bundleVersionCode = 2;
+            PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
+            PlayerSettings.allowedAutorotateToPortrait = true;
+            PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
+            PlayerSettings.allowedAutorotateToLandscapeLeft = false;
+            PlayerSettings.allowedAutorotateToLandscapeRight = false;
+            PlayerSettings.colorSpace = ColorSpace.Gamma;
+            EnsureUiShaders.MenuEnsure();
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel24;
             EditorUserBuildSettings.buildAppBundle = false;
             EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.Gradle;

@@ -37,12 +37,15 @@ namespace EggMerge.UI
         void BuildUi()
         {
             var canvasGo = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+            DontDestroyOnLoad(canvasGo);
             var canvas = canvasGo.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.pixelPerfect = false;
             var scaler = canvasGo.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1080, 1920);
-            scaler.matchWidthOrHeight = 0.5f;
+            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+            scaler.matchWidthOrHeight = 1f; // prefer height for portrait phones
 
             if (Object.FindFirstObjectByType<UnityEngine.EventSystems.EventSystem>() == null)
             {
@@ -352,11 +355,45 @@ namespace EggMerge.UI
             };
         }
 
+        static Font _uiFont;
+        static Material _uiMat;
+
+        static Font UiFont()
+        {
+            if (_uiFont != null)
+                return _uiFont;
+
+            _uiFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            if (_uiFont == null)
+                _uiFont = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            if (_uiFont == null)
+                _uiFont = Font.CreateDynamicFontFromOSFont(new[] { "Roboto", "Arial", "sans-serif", "Helvetica" }, 40);
+            return _uiFont;
+        }
+
+        static Material UiMaterial()
+        {
+            if (_uiMat != null)
+                return _uiMat;
+            var shader = Shader.Find("UI/Default");
+            if (shader == null)
+                shader = Shader.Find("Sprites/Default");
+            if (shader == null)
+                shader = Shader.Find("Unlit/Transparent");
+            if (shader != null)
+                _uiMat = new Material(shader) { name = "EggMergeUI" };
+            return _uiMat;
+        }
+
         static RectTransform CreatePanel(Transform parent, string name, Color color)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(Image));
             go.transform.SetParent(parent, false);
-            go.GetComponent<Image>().color = color;
+            var img = go.GetComponent<Image>();
+            img.color = color;
+            var mat = UiMaterial();
+            if (mat != null)
+                img.material = mat;
             return go.GetComponent<RectTransform>();
         }
 
@@ -365,14 +402,16 @@ namespace EggMerge.UI
             var go = new GameObject(name, typeof(RectTransform), typeof(Text));
             go.transform.SetParent(parent, false);
             var t = go.GetComponent<Text>();
-            t.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            if (t.font == null)
-                t.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            t.font = UiFont();
             t.fontSize = size;
             t.color = Color.white;
             t.alignment = anchor;
             t.horizontalOverflow = HorizontalWrapMode.Wrap;
             t.verticalOverflow = VerticalWrapMode.Overflow;
+            t.raycastTarget = false;
+            var mat = UiMaterial();
+            if (mat != null)
+                t.material = mat;
             return t;
         }
 
@@ -383,11 +422,16 @@ namespace EggMerge.UI
             var rt = go.GetComponent<RectTransform>();
             rt.sizeDelta = new Vector2(820, 120);
             rt.anchoredPosition = pos;
-            go.GetComponent<Image>().color = new Color(0.20f, 0.55f, 0.48f, 1f);
+            var img = go.GetComponent<Image>();
+            img.color = new Color(0.20f, 0.55f, 0.48f, 1f);
+            var mat = UiMaterial();
+            if (mat != null)
+                img.material = mat;
             var text = CreateText(go.transform, "Text", 40, TextAnchor.MiddleCenter);
             Stretch(text.rectTransform);
             text.text = label;
             var btn = go.GetComponent<Button>();
+            btn.targetGraphic = img;
             btn.onClick.AddListener(action);
             return btn;
         }

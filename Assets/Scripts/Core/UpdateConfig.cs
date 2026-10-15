@@ -2,7 +2,7 @@ namespace EggMerge.Core
 {
     public static class UpdateConfig
     {
-        public const string AppVersion = "0.1.0";
+        public const string AppVersion = "0.1.1";
 
         /// <summary>
         /// После первого push замени owner/repo на свой репозиторий.

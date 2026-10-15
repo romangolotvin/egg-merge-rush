@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
-  "notes": "Первая Android-сборка Egg Merge Rush.",
+  "version": "0.1.1",
+  "notes": "Фикс: портрет вместо вверх ногами, розовый экран (UI-шейдеры).",
   "android": "https://github.com/romangolotvin/egg-merge-rush/releases/latest/download/EggMergeRush.apk"
 }
