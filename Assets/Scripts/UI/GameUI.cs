@@ -8,9 +8,9 @@ namespace EggMerge.UI
 {
     public class GameUI : MonoBehaviour
     {
-        Text _hubPanel;
-        Text _levelPanel;
-        Text _overlayPanel;
+        RectTransform _hubPanel;
+        RectTransform _levelPanel;
+        RectTransform _overlayPanel;
         Text _hudText;
         Text _statusText;
         Text _boardText;
