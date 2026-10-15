@@ -53,6 +53,12 @@ namespace EggMerge.Core
                 adsGo.AddComponent<AdService>();
             }
 
+            if (UpdateService.Instance == null)
+            {
+                var updGo = new GameObject("UpdateService");
+                updGo.AddComponent<UpdateService>();
+            }
+
             Save = SaveSystem.Load();
             Energy = new EnergySystem(Save);
             Coins = new CurrencySystem(Save);
@@ -61,8 +67,15 @@ namespace EggMerge.Core
             Energy.Changed += PersistAndNotify;
             Coins.Changed += PersistAndNotify;
             Hatch.Changed += PersistAndNotify;
+            UpdateService.Instance.StateChanged += () =>
+            {
+                if (!string.IsNullOrEmpty(UpdateService.Instance.Status))
+                    StatusMessage = UpdateService.Instance.Status;
+                Notify();
+            };
 
             gameObject.AddComponent<GameUI>();
+            UpdateService.Instance.CheckNow();
             Notify();
         }
 

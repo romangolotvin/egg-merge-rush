@@ -1,38 +1,40 @@
 # Egg Merge Rush
 
-Merge-игра с яйцами, питомцами, уровнями и энергией. Цель первой сборки — **Android APK**. iOS позже.
+Отдельная Unity-игра (не связана с другими проектами).
 
-## Что уже есть (MVP)
+Merge яйца → питомцы → уровни. Энергия, мягкая валюта, rewarded-реклама (stub), автообновление через `updates/version.json`.
 
-- Merge-поле 5×6, яйца T1–T5
-- Уровни с растущей целью очков и меньшим числом ходов
-- Энергия: макс **8**, **−1** за уровень, **+1 / 15 мин**, реклама **+3**
-- Continue / x2 монеты / ускорение инкубации — rewarded (пока stub)
-- Инкубация яйца T3+ → питомец с бонусом к монетам
-- Сохранение в `persistentDataPath`
+## Стек
 
-## Важно
+- Unity 6000.0.85f1 (Android first, iOS later)
+- Package id: `com.romangames.eggmergerush`
+- Локальная версия: `Assets/Scripts/Core/UpdateConfig.cs` → `AppVersion`
+- Манифест: `updates/version.json`
 
-На этом ПК **Unity Editor не установлен**. Чтобы собрать APK:
+## Сборка APK
 
-1. Поставь [Unity Hub](https://unity.com/download)
-2. Установи **Unity 6 LTS** или **2022.3 LTS**
-3. В модулях отметь **Android Build Support** (SDK + NDK + OpenJDK)
-4. Hub → Open → папка `C:\Users\Roman\egg-merge-rush`
-5. Дождись импорта, открой сцену `Assets/Scenes/Main.unity`
-6. Play — проверить геймплей
-7. Меню **EggMerge → Build Android APK**  
-   или `File → Build Settings → Android → Build`  
-   APK: `Builds/Android/EggMergeRush.apk`
+1. Unity Hub → Editor 6000.0.85f1 + Android Build Support (SDK/NDK/OpenJDK)
+2. Открыть эту папку как проект
+3. Меню **EggMerge → Build Android APK**  
+   или:
 
-## Package id
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\build-android.ps1
+```
 
-`com.romangames.eggmergerush`
+APK: `Builds/Android/EggMergeRush.apk`
 
-## Реклама
+## Автообновление
 
-`AdService` — заглушка (в Editor сразу «успех»). Перед релизом в стор подключи Unity LevelPlay или AdMob и замени вызовы в `Assets/Scripts/Ads/AdService.cs`.
+Игра читает:
 
-## iOS (потом)
+`https://raw.githubusercontent.com/romangolotvin/egg-merge-rush/main/updates/version.json`
 
-Тот же проект: переключить platform на iOS, Apple Developer + signing. Логику менять не нужно.
+В хабе кнопка «Проверить обновление» / скачать APK при новой версии.
+
+## Геймплей (MVP)
+
+- Поле 5×6, merge яиц T1–T5
+- Энергия: макс 8, −1/уровень, +1/15 мин, реклама +3
+- Continue / x2 монеты / ускорение инкубации
+- Яйцо T3+ → питомец с бонусом к монетам

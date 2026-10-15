@@ -8,6 +8,11 @@
 [Mm]emoryCaptures/
 [Rr]ecordings/
 
+# local install/build noise
+hub-*.txt
+unity-install-*.txt
+*.log
+
 *.csproj
 *.unityproj
 *.sln

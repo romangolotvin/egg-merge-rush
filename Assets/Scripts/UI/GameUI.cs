@@ -73,10 +73,18 @@ namespace EggMerge.UI
             _hubPanel = CreatePanel(root, "Hub", new Color(0, 0, 0, 0));
             Stretch(_hubPanel, 280, 220);
 
-            CreateButton(_hubPanel, "Играть (−1⚡)", new Vector2(0, 180), () => GameManager.Instance.TryStartLevel());
-            CreateButton(_hubPanel, "Энергия +3 (реклама)", new Vector2(0, 40), () => GameManager.Instance.RefillEnergyWithAd());
-            CreateButton(_hubPanel, "Ускорить яйцо (реклама)", new Vector2(0, -100), () => GameManager.Instance.SpeedUpHatch());
-            CreateButton(_hubPanel, "Забрать питомца", new Vector2(0, -240), () => GameManager.Instance.ClaimHatch());
+            CreateButton(_hubPanel, "Играть (−1⚡)", new Vector2(0, 220), () => GameManager.Instance.TryStartLevel());
+            CreateButton(_hubPanel, "Энергия +3 (реклама)", new Vector2(0, 80), () => GameManager.Instance.RefillEnergyWithAd());
+            CreateButton(_hubPanel, "Ускорить яйцо (реклама)", new Vector2(0, -60), () => GameManager.Instance.SpeedUpHatch());
+            CreateButton(_hubPanel, "Забрать питомца", new Vector2(0, -200), () => GameManager.Instance.ClaimHatch());
+            CreateButton(_hubPanel, "Проверить обновление", new Vector2(0, -340), () =>
+            {
+                var upd = UpdateService.Instance;
+                if (upd != null && upd.UpdateAvailable)
+                    upd.OpenDownload();
+                else
+                    upd?.CheckNow();
+            });
 
             var petsInfo = CreateText(_hubPanel, "Pets", 32, TextAnchor.UpperLeft);
             var pr = petsInfo.rectTransform;
@@ -231,7 +239,7 @@ namespace EggMerge.UI
                 ? "полная"
                 : $"{next.Minutes:00}:{next.Seconds:00}";
             _hudText.text =
-                $"{GameConfig.AppName}\n⚡ {gm.Energy.Energy}/{gm.Energy.Max}  (+1 через {timer})\n" +
+                $"{GameConfig.AppName}  v{UpdateConfig.AppVersion}\n⚡ {gm.Energy.Energy}/{gm.Energy.Max}  (+1 через {timer})\n" +
                 $"🪙 {gm.Coins.Coins}    Ур. {gm.CurrentLevel}";
         }
 

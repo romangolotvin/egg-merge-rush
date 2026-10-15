@@ -18,7 +18,7 @@ namespace EggMerge.EditorTools
 
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "com.romangames.eggmergerush");
             PlayerSettings.productName = "Egg Merge Rush";
-            PlayerSettings.bundleVersion = "0.1.0";
+            PlayerSettings.bundleVersion = EggMerge.Core.UpdateConfig.AppVersion;
             PlayerSettings.Android.bundleVersionCode = 1;
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel24;
             EditorUserBuildSettings.buildAppBundle = false;
